@@ -68,7 +68,7 @@ float PromeGeneral(struct Materia m1, struct Materia m2, struct Materia m3) {
 int main()
 {
 
-struct Estudiante ana = {"Ana Garcia", 19, 9.5, 'A'}; //Inicialización
+struct Estudiante ana = {"Ana Garcia", 19, 9.5, 'A'}; //InicializaciÃ³n
 
 imprimir(ana);
 printf("%d\n\n",ana);
