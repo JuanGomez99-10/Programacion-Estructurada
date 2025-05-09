@@ -1,11 +1,16 @@
 #ifndef ATM_H_INCLUDED
 #define ATM_H_INCLUDED
 
+typedef struct {
+    char nombre[50];
+    float saldo;
+    int pin;
+} Cliente;
 
 // Funcion para verificar la cantidad ingresada
 int verificacion(float X)
 {
-    if (X > 0) // Cantidades v·lidas o positivas
+    if (X > 0) // Cantidades v√°lidas o positivas
     {
         return 1;
     }
@@ -39,24 +44,25 @@ int OtraOperacion(void)
             printf("Gracias por usar mi cajero\n");
             printf("Que tengas un buen dia\n");
             return 0;
-        default: // Ingresa n˙mero o caracter invalido
-            printf("AcciÛn no disponible\n");
-            printf("Por favor selecciona una v·lida\n");
+        default: // Ingresa n√∫mero o caracter invalido
+            printf("Acci√≥n no disponible\n");
+            printf("Por favor selecciona una v√°lida\n");
             return OtraOperacion();
     }
 }
 
 // Funcion Del Pin para ingresar
-int PIN(void)
+int PIN(int cuentaSeleccionada)
 {
-    int pin;
-    // El pin de mi cuenta es 9900
+    int pinIngresado;
+    int pines[3] = {9900, 1234, 4321};  // NIPs para cada cuenta
+
     for (int intento = 0; intento < 3; intento++)
     {
         printf("Para continuar, ingresa tu PIN:\n");
-        scanf("%d", &pin);
+        scanf("%d", &pinIngresado);
 
-        if (pin == 9900)
+        if (pinIngresado == pines[cuentaSeleccionada - 1])
         {
             printf("Bienvenido\n");
             return 1;
@@ -69,7 +75,7 @@ int PIN(void)
         }
     }
 
-    printf("Haz superado el limite de intentos");
+    printf("Haz superado el limite de intentos\n");
     exit(0);
 }
 
@@ -83,7 +89,7 @@ void LimpiarPantalla(void)
     #endif
 }
 
-// Funcion para mostrar el men˙ de selecciÛn de cuentas
+// Funcion para mostrar el men√∫ de selecci√≥n de cuentas
 int SeleccionarCuenta(int *opcionCuenta)
 {
     printf("Selecciona una cuenta (1-3):\n");
@@ -94,7 +100,7 @@ int SeleccionarCuenta(int *opcionCuenta)
 
     if (*opcionCuenta < 1 || *opcionCuenta > 3)
     {
-        printf("OpciÛn no v·lida. Por favor selecciona una cuenta entre 1 y 3.\n");
+        printf("Opci√≥n no v√°lida. Por favor selecciona una cuenta entre 1 y 3.\n");
         return SeleccionarCuenta(opcionCuenta);
     }
 
