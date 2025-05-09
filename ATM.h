@@ -2,6 +2,7 @@
 #define ATM_H_INCLUDED
 
 typedef struct {
+    int  numClientes;
     char nombre[50];
     float saldo;
     int pin;
@@ -25,29 +26,6 @@ int verificacion(float X)
         printf("ERROR: La cantidad ingresada es NEGATIVA \n");
         printf("Ingresa un numero POSITIVO");
         return 0;
-    }
-}
-
-// Funcion para preguntar si quiere hacer otra operacion o salir
-int OtraOperacion(void)
-{
-    int opcion;
-    printf("Hay algo mas que podamos hacer por ti?\n");
-    printf("1. Si, volver al menu\n");
-    printf("2. No, salir.\n");
-    scanf("%d", &opcion);
-    switch (opcion)
-    {
-        case 1:
-            return 1;
-        case 2:
-            printf("Gracias por usar mi cajero\n");
-            printf("Que tengas un buen dia\n");
-            return 0;
-        default: // Ingresa número o caracter invalido
-            printf("Acción no disponible\n");
-            printf("Por favor selecciona una válida\n");
-            return OtraOperacion();
     }
 }
 
@@ -87,13 +65,15 @@ void LimpiarPantalla(void)
     #endif
 }
 
+
+
 // Funcion para mostrar el menú de selección de cuentas
 int SeleccionarCuenta(int *opcionCuenta)
 {
     printf("Selecciona una cuenta (1-3):\n");
-    printf("1. Cuenta 1\n");
-    printf("2. Cuenta 2\n");
-    printf("3. Cuenta 3\n");
+    printf("1. Ulises Arreola\n");
+    printf("2. Edwin Barajas\n");
+    printf("3. Juan Gomez\n");
     scanf("%d", opcionCuenta);
 
     if (*opcionCuenta < 1 || *opcionCuenta > 3)
@@ -169,7 +149,80 @@ int RetirarDinero(float *saldo)
     return OtraOperacion();
 }
 
+//Crear Cuenta
+int NuevaCuenta(Cliente clientes[], int *numClientes)
+{
+    void NuevaCuenta(Cliente clientes[], int *numClientes) {
+    char nombre[50];
+    int pin, confPin;
+    float deposito;
 
+    printf("Bienvenido\n\n");
+
+    printf("Ingresa Nombre y Apellido:\n");
+    scanf("%c",nombre);
+
+    do {
+        printf("Crea un NIP de 4 dígitos: ");
+        scanf("%d", &pin);
+
+        printf("Confirmar NIP: ");
+        scanf("%d", &confPin);
+
+        if (pin != confPin) {
+            printf("Los NIPs no coinciden. Intente de nuevo.\n");
+        }
+    } while (pin != confPin);
+
+    // Registrar cliente en struct
+    Cliente[*numClientes].numClientes = *numClientes + 1;
+    strcpy(clientes[*numClientes].nombre, nombre);
+    Cliente[*numClientes].nip = pin;
+
+    printf("Por favor, para continuar deposita al menos $300: ");
+    Depositardinero
+
+    while (Depositardinero < 300.0) {
+        printf("El depósito mínimo es $300. Intenta de nuevo: ");
+        scanf("%f", &deposito);
+    }
+
+    clientes[*numClientes].saldo = deposito;
+
+    printf("Cuenta creada con exito\n");
+    printf("Bienvenido, %s!\n", nombre);
+    printf("Tu número de cuenta es: %d\n", Cliente[*numClientes].numClientes);
+
+    (*numClientes)++; // Incrementar contador de clientes
+}
+
+
+
+
+
+
+// Funcion para preguntar si quiere hacer otra operacion o salir
+int OtraOperacion(void)
+{
+    int opcion;
+    printf("Hay algo mas que podamos hacer por ti?\n");
+    printf("1. Si, volver al menu\n");
+    printf("2. No, salir.\n");
+    scanf("%d", &opcion);
+    switch (opcion)
+    {
+        case 1:
+            return 1;
+        case 2:
+            printf("Gracias por usar mi cajero\n");
+            printf("Que tengas un buen dia\n");
+            return 0;
+        default: // Ingresa número o caracter invalido
+            printf("Acción no disponible\n");
+            printf("Por favor selecciona una válida\n");
+            return OtraOperacion();
+    }
+}
 #endif // ATM_H_INCLUDED
 
 
