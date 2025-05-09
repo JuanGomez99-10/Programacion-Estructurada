@@ -52,17 +52,16 @@ int OtraOperacion(void)
 }
 
 // Funcion Del Pin para ingresar
-int PIN(int cuentaSeleccionada)
+int PIN(int pinCorrecto)
 {
     int pinIngresado;
-    int pines[3] = {9900, 1234, 4321};  // NIPs para cada cuenta
 
     for (int intento = 0; intento < 3; intento++)
     {
         printf("Para continuar, ingresa tu PIN:\n");
         scanf("%d", &pinIngresado);
 
-        if (pinIngresado == pines[cuentaSeleccionada - 1])
+        if (pinIngresado == pinCorrecto)
         {
             printf("Bienvenido\n");
             return 1;
@@ -70,12 +69,11 @@ int PIN(int cuentaSeleccionada)
         else
         {
             printf("Error, el PIN ingresado es incorrecto.\n");
-            printf("Intentalo de nuevo\n");
             printf("Intentos restantes: %d\n", 2 - intento);
         }
     }
 
-    printf("Haz superado el limite de intentos\n");
+    printf("Has superado el límite de intentos\n");
     exit(0);
 }
 
