@@ -152,7 +152,12 @@ int RetirarDinero(float *saldo)
 //Crear Cuenta
 int NuevaCuenta(Cliente clientes[], int *numClientes)
 {
-    void NuevaCuenta(Cliente clientes[], int *numClientes) {
+    if (*numClientes >= 100)
+    {
+        printf("Se ha alcanzado el límite de clientes (100).\n");
+        return 0;
+    }
+
     char nombre[50];
     int pin, confPin;
     float deposito;
@@ -160,7 +165,9 @@ int NuevaCuenta(Cliente clientes[], int *numClientes)
     printf("Bienvenido\n\n");
 
     printf("Ingresa Nombre y Apellido:\n");
-    scanf("%c",nombre);
+    getchar(); // Limpiar buffer
+    fgets(nombre, sizeof(nombre), stdin);
+    nombre[strcspn(nombre, "\n")] = '\0'; // Eliminar salto de línea
 
     do {
         printf("Crea un NIP de 4 dígitos: ");
@@ -170,35 +177,32 @@ int NuevaCuenta(Cliente clientes[], int *numClientes)
         scanf("%d", &confPin);
 
         if (pin != confPin) {
-            printf("Los NIPs no coinciden. Intente de nuevo.\n");
+            printf("Los NIPs no coinciden. Intenta de nuevo.\n");
         }
     } while (pin != confPin);
 
-    // Registrar cliente en struct
-    Cliente[*numClientes].numClientes = *numClientes + 1;
-    strcpy(clientes[*numClientes].nombre, nombre);
-    Cliente[*numClientes].nip = pin;
-
-    printf("Por favor, para continuar deposita al menos $300: ");
-    Depositardinero
-
-    while (Depositardinero < 300.0) {
-        printf("El depósito mínimo es $300. Intenta de nuevo: ");
+    do {
+        printf("Por favor, para continuar deposita al menos $300: ");
         scanf("%f", &deposito);
-    }
+        if (deposito < 300.0) {
+            printf("El depósito mínimo es $300. Intenta de nuevo.\n");
+        }
+    } while (deposito < 300.0);
 
+    // Registrar cliente en el arreglo
+    clientes[*numClientes].numClientes = *numClientes + 1;
+    strcpy(clientes[*numClientes].nombre, nombre);
+    clientes[*numClientes].pin = pin;
     clientes[*numClientes].saldo = deposito;
 
-    printf("Cuenta creada con exito\n");
+    printf("\nCuenta creada con éxito.\n");
     printf("Bienvenido, %s!\n", nombre);
-    printf("Tu número de cuenta es: %d\n", Cliente[*numClientes].numClientes);
+    printf("Tu número de cuenta es: %03d\n", clientes[*numClientes].numClientes);
 
     (*numClientes)++; // Incrementar contador de clientes
+
+    return OtraOperacion(); // Preguntar si quiere hacer otra operación
 }
-
-
-
-
 
 
 // Funcion para preguntar si quiere hacer otra operacion o salir
