@@ -10,6 +10,8 @@ int main(void)
     {0003,"Juan Gomez", 5400.0, 2015}
 };
 
+    int numClientes = 3;  // Ya se tienen 3 clientes.
+
     int opcion, seguir = 1, cuentaSeleccionada;
 
     // Seleccion de ceuntas
