@@ -29,6 +29,29 @@ int verificacion(float X)
     }
 }
 
+// Funcion para preguntar si quiere hacer otra operacion o salir
+int OtraOperacion(void)
+{
+    int opcion;
+    printf("Hay algo mas que podamos hacer por ti?\n");
+    printf("1. Si, volver al menu\n");
+    printf("2. No, salir.\n");
+    scanf("%d", &opcion);
+    switch (opcion)
+    {
+        case 1:
+            return 1;
+        case 2:
+            printf("Gracias por usar mi cajero\n");
+            printf("Que tengas un buen dia\n");
+            return 0;
+        default: // Ingresa número o caracter invalido
+            printf("Acción no disponible\n");
+            printf("Por favor selecciona una válida\n");
+            return OtraOperacion();
+    }
+}
+
 // Funcion Del Pin para ingresar
 int PIN(int pinCorrecto)
 {
@@ -205,28 +228,4 @@ int NuevaCuenta(Cliente clientes[], int *numClientes)
 }
 
 
-// Funcion para preguntar si quiere hacer otra operacion o salir
-int OtraOperacion(void)
-{
-    int opcion;
-    printf("Hay algo mas que podamos hacer por ti?\n");
-    printf("1. Si, volver al menu\n");
-    printf("2. No, salir.\n");
-    scanf("%d", &opcion);
-    switch (opcion)
-    {
-        case 1:
-            return 1;
-        case 2:
-            printf("Gracias por usar mi cajero\n");
-            printf("Que tengas un buen dia\n");
-            return 0;
-        default: // Ingresa número o caracter invalido
-            printf("Acción no disponible\n");
-            printf("Por favor selecciona una válida\n");
-            return OtraOperacion();
-    }
-}
 #endif // ATM_H_INCLUDED
-
-
