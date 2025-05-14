@@ -1,78 +1,113 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "ATM.h"
 
 int main(void)
 {
     Cliente clientes[100] = {
-    {0001,"Ulises Arreola", 1000.0, 9900},
-    {0002,"Edwin Barajas", 3000.0, 4779},
-    {0003,"Juan Gomez", 5400.0, 2015}
-};
+        {1, "Ulises Arreola", 1000.0, 9900},
+        {2, "Edwin Barajas", 3000.0, 4779},
+        {3, "Juan Gomez", 5400.0, 2015}
+    };
 
-    int numClientes = 3;  // Ya se tienen 3 clientes.
+    int numClientes = 3;
+    int opcionPrincipal, opcion, seguir = 1, cuentaSeleccionada, clienteExiste = 0;
 
-    int opcion, seguir = 1, cuentaSeleccionada;
-
-    // Seleccion de ceuntas
-    SeleccionarCuenta(&cuentaSeleccionada);
-    printf("Has seleccionado la cuenta %d\n", cuentaSeleccionada);
-    printf("Titular de la cuenta: %s\n\n", clientes[cuentaSeleccionada - 1].nombre);
     do
     {
-        // Menú de opciones
-        printf("Bienvenido a mi cajero\n\n");
-        printf("1. Consultar Saldo\n");
-        printf("2. Depositar dinero\n");
-        printf("3. Retirar Dinero\n");
-        printf("4. Crear Nueva Cuenta\n");
-        printf("5. Salir\n\n");
-        printf("Porfavor selecciona una opcion\n");
-        scanf("%d", &opcion);
-
+        printf("====== MENU PRINCIPAL ======\n");
+        printf("1. Iniciar sesion (cuenta existente)\n");
+        printf("2. Crear nueva cuenta\n");
+        printf("3. Salir\n");
+        printf("Selecciona una opcion: ");
+        scanf("%d", &opcionPrincipal);
         LimpiarPantalla();
 
-        switch (opcion)
+        switch (opcionPrincipal)
         {
-            case 1:  // Consulta de saldo
-                seguir = PIN(clientes[cuentaSeleccionada - 1].pin);
-                seguir = ConsultarSaldo(clientes[cuentaSeleccionada - 1].saldo);
-                LimpiarPantalla();
+            case 1:
+                // Ingresar número de cliente y PIN
+                printf("Ingresa tu numero de cliente: ");
+                scanf("%d", &cuentaSeleccionada);
+
+                // Verificar si el cliente existe
+                for (int i = 0; i < numClientes; i++)
+                {
+                    if (clientes[i].numClientes == cuentaSeleccionada)
+                    {
+                        clienteExiste = 1;
+                        seguir = PIN(clientes[i].pin);  // Verificar PIN
+                        if (seguir)
+                        {
+                            printf("Has seleccionado la cuenta de %s\n", clientes[i].nombre);
+                            break;
+                        }
+                    }
+                }
+
+                if (!clienteExiste)
+                {
+                    printf("No existe una cuenta con ese número de cliente.\n");
+                    seguir = 0;
+                }
+
+                if (seguir) {
+                    do
+                    {
+                        printf("Bienvenido a mi cajero\n\n");
+                        printf("1. Consultar Saldo\n");
+                        printf("2. Depositar dinero\n");
+                        printf("3. Retirar Dinero\n");
+                        printf("4. Cerrar sesion\n\n");
+                        printf("Porfavor selecciona una opcion\n");
+                        scanf("%d", &opcion);
+                        LimpiarPantalla();
+
+                        switch (opcion)
+                        {
+                            case 1:
+                                seguir = ConsultarSaldo(clientes[cuentaSeleccionada - 1].saldo);
+                                break;
+
+                            case 2:
+                                seguir = Depositardinero(&clientes[cuentaSeleccionada - 1].saldo);
+                                break;
+
+                            case 3:
+                                seguir = RetirarDinero(&clientes[cuentaSeleccionada - 1].saldo);
+                                break;
+
+                            case 4:
+                                printf("Sesion cerrada. Regresando al menu principal...\n");
+                                seguir = 0;
+                                break;
+
+                            default:
+                                printf("Opcion no valida. Intenta de nuevo.\n");
+                                break;
+                        }
+                        LimpiarPantalla();
+                    } while (seguir != 0);
+                }
                 break;
 
-            case 2:  // Depositar dinero
-                seguir = PIN(clientes[cuentaSeleccionada - 1].pin);
-                seguir = Depositardinero(&clientes[cuentaSeleccionada - 1].saldo);
-                LimpiarPantalla();
-                break;
-
-            case 3:  // Retirar dinero
-                seguir = PIN(clientes[cuentaSeleccionada - 1].pin);
-                seguir = RetirarDinero(&clientes[cuentaSeleccionada - 1].saldo);
-                LimpiarPantalla();
-                break;
-
-            case 4:  // Nueva Cuenta
-                printf("Crear Cuenta\n");
+            case 2:
                 NuevaCuenta(clientes, &numClientes);
-                LimpiarPantalla();
                 break;
 
-            case 5:  // Salir
+            case 3:
                 printf("Gracias por usar mi cajero\n");
                 printf("Que tengas un buen dia\n");
-                seguir = 0;
-                LimpiarPantalla();
+                exit(0);
                 break;
 
-            default: // Ingresa número o caracter inválido
-                printf("Acción no disponible\n");
-                printf("Por favor selecciona una válida\n");
-                seguir = 1;
-                LimpiarPantalla();
+            default:
+                printf("Opcion no valida. Intenta de nuevo.\n");
                 break;
         }
-    } while (seguir != 0);
+
+    } while (1);
 
     return 0;
 }
