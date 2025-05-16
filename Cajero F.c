@@ -16,10 +16,11 @@ int main(void)
 
     do
     {
-        printf("====== MENU PRINCIPAL ======\n");
+        printf("Bienvenido\n");
         printf("1. Iniciar sesion (cuenta existente)\n");
         printf("2. Crear nueva cuenta\n");
-        printf("3. Salir\n");
+        printf("3. Buscar numero de cuenta por nombre\n");
+        printf("4. Salir\n");
         printf("Selecciona una opcion: ");
         scanf("%d", &opcionPrincipal);
         LimpiarPantalla();
@@ -27,17 +28,15 @@ int main(void)
         switch (opcionPrincipal)
         {
             case 1:
-                // Ingresar número de cliente y PIN
                 printf("Ingresa tu numero de cliente: ");
                 scanf("%d", &cuentaSeleccionada);
 
-                // Verificar si el cliente existe
                 for (int i = 0; i < numClientes; i++)
                 {
                     if (clientes[i].numClientes == cuentaSeleccionada)
                     {
                         clienteExiste = 1;
-                        seguir = PIN(clientes[i].pin);  // Verificar PIN
+                        seguir = PIN(clientes[i].pin);
                         if (seguir)
                         {
                             printf("Has seleccionado la cuenta de %s\n", clientes[i].nombre);
@@ -48,7 +47,7 @@ int main(void)
 
                 if (!clienteExiste)
                 {
-                    printf("No existe una cuenta con ese número de cliente.\n");
+                    printf("No existe una cuenta con ese numero de cliente.\n");
                     seguir = 0;
                 }
 
@@ -56,17 +55,18 @@ int main(void)
                     do
                     {
                         printf("Bienvenido a mi cajero\n\n");
-                        printf("1. Consultar Saldo\n");
+                        printf("1. Consultar saldo\n");
                         printf("2. Depositar dinero\n");
-                        printf("3. Retirar Dinero\n");
+                        printf("3. Retirar dinero\n");
                         printf("4. Cerrar sesion\n\n");
-                        printf("Porfavor selecciona una opcion\n");
+                        printf("Por favor selecciona una opcion\n");
                         scanf("%d", &opcion);
                         LimpiarPantalla();
 
                         switch (opcion)
                         {
                             case 1:
+                                printf("Saldo disponible: %.2f\n", clientes[cuentaSeleccionada - 1].saldo);
                                 seguir = ConsultarSaldo(clientes[cuentaSeleccionada - 1].saldo);
                                 break;
 
@@ -97,6 +97,22 @@ int main(void)
                 break;
 
             case 3:
+                {
+                    char nombre[100];
+                    printf("Ingresa el nombre del cliente: ");
+                    getchar();
+                    fgets(nombre, sizeof(nombre), stdin);
+                    nombre[strcspn(nombre, "\n")] = '\0';
+                    int indice = Buscar(clientes, numClientes, nombre);
+                    if (indice == -1) {
+                        printf("No se encontro un cliente con ese nombre.\n");
+                    } else {
+                        printf("El numero de cuenta de %s es: %d\n", clientes[indice].nombre, clientes[indice].numClientes);
+                    }
+                }
+                break;
+
+            case 4:
                 printf("Gracias por usar mi cajero\n");
                 printf("Que tengas un buen dia\n");
                 exit(0);
