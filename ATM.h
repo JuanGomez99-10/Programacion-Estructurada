@@ -177,7 +177,7 @@ int NuevaCuenta(Cliente clientes[], int *numClientes)
 {
     if (*numClientes >= 100)
     {
-        printf("Se ha alcanzado el límite de clientes (100).\n");
+        printf("Se ha alcanzado el limite de clientes (100).\n");
         return 0;
     }
 
@@ -193,7 +193,7 @@ int NuevaCuenta(Cliente clientes[], int *numClientes)
     nombre[strcspn(nombre, "\n")] = '\0'; // Eliminar salto de línea
 
     do {
-        printf("Crea un NIP de 4 dígitos: ");
+        printf("Crea un NIP de 4 digitos: ");
         scanf("%d", &pin);
 
         printf("Confirmar NIP: ");
@@ -208,7 +208,7 @@ int NuevaCuenta(Cliente clientes[], int *numClientes)
         printf("Por favor, para continuar deposita al menos $300: ");
         scanf("%f", &deposito);
         if (deposito < 300.0) {
-            printf("El depósito mínimo es $300. Intenta de nuevo.\n");
+            printf("El deposito minimo es $300. Intenta de nuevo.\n");
         }
     } while (deposito < 300.0);
 
@@ -218,9 +218,9 @@ int NuevaCuenta(Cliente clientes[], int *numClientes)
     clientes[*numClientes].pin = pin;
     clientes[*numClientes].saldo = deposito;
 
-    printf("\nCuenta creada con éxito.\n");
+    printf("\nCuenta creada con exito.\n");
     printf("Bienvenido, %s!\n", nombre);
-    printf("Tu número de cuenta es: %03d\n", clientes[*numClientes].numClientes);
+    printf("Tu numero de cuenta es: %03d\n", clientes[*numClientes].numClientes);
 
     (*numClientes)++; // Incrementar contador de clientes
 
