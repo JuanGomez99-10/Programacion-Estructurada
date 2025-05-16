@@ -171,6 +171,14 @@ int RetirarDinero(float *saldo)
     printf("Su nuevo saldo es: $ %.2f\n", *saldo);
     return OtraOperacion();
 }
+int Buscar(Cliente clientes[], int numClientes, const char *nombreBuscado) {
+    for (int i = 0; i < numClientes; i++) {
+        if (strcmp(clientes[i].nombre, nombreBuscado) == 0) {
+            return i;
+        }
+    }
+    return -1;
+}
 
 //Crear Cuenta
 int NuevaCuenta(Cliente clientes[], int *numClientes)
